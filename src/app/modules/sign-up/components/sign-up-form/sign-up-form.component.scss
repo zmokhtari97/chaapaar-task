@@ -1,0 +1,21 @@
+.field-label {
+  @apply w-40 shrink-0;
+
+  label {
+    @apply relative;
+    &.required:after {
+      @apply content-["*"] absolute top-0 -end-3 text-red-600;
+    }
+  }
+}
+
+.field-input {
+  @apply flex flex-col w-full;
+  p {
+    @apply text-red-600 text-sm mt-1;
+  }
+}
+
+.field-row {
+  @apply flex max-lg:justify-start lg:items-center gap-1 lg:gap-4 w-full max-lg:flex-col;
+}
