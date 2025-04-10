@@ -8,36 +8,14 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NgClass } from '@angular/common';
-import { RegisterService } from '../../../shared/service/register.service';
-import { Subscription } from 'rxjs';
+import { FormType, registerFormModel, RegisterService } from '../../../shared';
 
-type FormType = {
-  identifier: FormControl<string>;
-  username: FormControl<string>;
-  first_name: FormControl<string>;
-  last_name: FormControl<string>;
-  display_name: FormControl<string>;
-  newPassword: FormControl<string>;
-  confirmPassword: FormControl<string>;
-};
-interface formModel {
-  description: string;
-  errorMessage: string;
-  maxLength: number;
-  minLength: number;
-  name: string;
-  required: boolean;
-  title: string;
-  type: string;
-  regex: string;
-  descriptionShowType: string;
-  showConfirmPassword: boolean;
-}
 @Component({
   selector: 'app-sign-up-form',
   standalone: true,
@@ -57,7 +35,7 @@ export class SignUpFormComponent implements OnInit {
   subscription!: Subscription;
 
   registerService = inject(RegisterService);
-  fields: formModel[] = [];
+  fields: registerFormModel[] = [];
 
   form!: FormGroup<FormType>;
 
@@ -81,7 +59,7 @@ export class SignUpFormComponent implements OnInit {
 
   signUpFormFields(): FormType {
     let finalFields = {};
-    this.fields.forEach((field: formModel) => {
+    this.fields.forEach((field: registerFormModel) => {
       let fieldValidators = [];
       if ('minLength' in field) {
         fieldValidators.push(Validators.minLength(field.minLength));
@@ -134,6 +112,5 @@ export const passwordMatchValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const password = control.get('newPassword')?.value;
   const confirmPassword = control.get('confirmPassword')?.value;
-
   return password === confirmPassword ? null : { mismatch: true };
 };
