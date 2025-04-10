@@ -10,7 +10,7 @@ import {
 } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
-
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NgClass } from '@angular/common';
 import { RegisterService } from '../../../shared/service/register.service';
@@ -36,6 +36,7 @@ interface formModel {
   type: string;
   regex: string;
   descriptionShowType: string;
+  showConfirmPassword: boolean;
 }
 @Component({
   selector: 'app-sign-up-form',
@@ -46,6 +47,7 @@ interface formModel {
     NzInputModule,
     NzToolTipModule,
     NgClass,
+    NzSpinModule,
   ],
   templateUrl: './sign-up-form.component.html',
   styleUrl: './sign-up-form.component.scss',
@@ -68,7 +70,7 @@ export class SignUpFormComponent implements OnInit {
       .getRegisterForm()
       .subscribe((resp: any) => {
         this.fields = resp.form.fields;
-        console.log(this.fields);
+
         this.initForm();
       });
   }
@@ -100,8 +102,17 @@ export class SignUpFormComponent implements OnInit {
           validators: fieldValidators,
         }),
       };
-    });
 
+      if (field.showConfirmPassword) {
+        finalFields = {
+          ...finalFields,
+          confirmPassword: new FormControl('', {
+            nonNullable: true,
+            validators: [Validators.required],
+          }),
+        };
+      }
+    });
     return finalFields as FormType;
   }
 
@@ -121,7 +132,7 @@ export class SignUpFormComponent implements OnInit {
 export const passwordMatchValidator: ValidatorFn = (
   control: AbstractControl
 ): ValidationErrors | null => {
-  const password = control.get('password')?.value;
+  const password = control.get('newPassword')?.value;
   const confirmPassword = control.get('confirmPassword')?.value;
 
   return password === confirmPassword ? null : { mismatch: true };
