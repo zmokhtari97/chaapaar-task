@@ -10,9 +10,9 @@
 }
 
 .field-input {
-  @apply flex flex-col w-full;
+  @apply flex flex-col w-full relative;
   p {
-    @apply text-red-600 text-sm mt-1;
+    @apply text-red-600 text-sm mt-1 absolute -bottom-5 left-0;
   }
 }
 

@@ -1,177 +1,40 @@
 <form class="mt-3" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="flex flex-col gap-8 pb-16">
+    @for(field of fields; track $index ){
     <div class="field-row">
       <div class="field-label">
         <label
-          for="identifier"
-          class="required"
+          [for]="field.name"
+          [ngClass]="{ required: field.required }"
           nz-tooltip
-          nzTooltipTitle="Enter your mobile number or email"
-          >Mobile number or email:</label
+          [nzTooltipTitle]="
+            field.descriptionShowType === 'TOOLTIP' ? field.description : ''
+          "
+          >{{ field.title }}</label
         >
       </div>
       <div class="field-input">
         <input
           nz-input
-          id="identifier"
-          formControlName="identifier"
-          placeholder="e.g., +98912... or user@example.com"
+          [type]="field.type === 'TEXT' ? 'text' : 'password'"
+          [id]="field.name"
+          [formControlName]="field.name"
+          [placeholder]="
+            field.descriptionShowType !== 'TOOLTIP'
+              ? field.description ?? ''
+              : ''
+          "
         />
-        @if(form.get('identifier')?.invalid && form.get('identifier')?.touched){
-        <p nz-tooltip nzTooltipTitle="The entered identifier is not valid">
-          The entered identifier is not valid
+        @if(form.get(field.name)?.invalid && form.get(field.name)?.touched){
+        <p>
+          {{ field.errorMessage }}
         </p>
         }
       </div>
     </div>
-
-    <div class="field-row">
-      <div class="field-label">
-        <label
-          for="username"
-          class="required"
-          nz-tooltip
-          nzTooltipTitle="The entry argument must have English Lowercase Letters and minimum 5 characters and maximum 15 characters."
-          >Username:</label
-        >
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          id="username"
-          formControlName="username"
-          placeholder="e.g., john_doe123"
-        />
-        @if(form.get('username')?.invalid && form.get('username')?.touched){
-        <p
-          nz-tooltip
-          nzTooltipTitle="username must have Lowercase and minimum 5characters and maximum 15
-        characters"
-        >
-          username must have Lowercase and minimum 5characters and maximum 15
-          characters
-        </p>
-        }
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field-label">
-        <label
-          for="first_name"
-          class="required"
-          nz-tooltip
-          nzTooltipTitle="Enter name"
-          >Name:</label
-        >
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          id="first_name"
-          formControlName="first_name"
-          placeholder="e.g., john"
-        />
-        @if(form.get('first_name')?.invalid && form.get('first_name')?.touched){
-        <p
-          nz-tooltip
-          nzTooltipTitle="First name must be english with at least two characters and maximum 30
-        characters."
-        >
-          First name must be english with at least two characters and maximum 30
-          characters.
-        </p>
-        }
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field-label">
-        <label
-          for="last_name"
-          class="required"
-          nz-tooltip
-          nzTooltipTitle="Enter last name"
-          >Last name:
-        </label>
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          id="last_name"
-          formControlName="last_name"
-          placeholder="e.g., Don"
-        />
-        @if(form.get('last_name')?.invalid && form.get('last_name')?.touched){
-        <p
-          nz-tooltip
-          nzTooltipTitle="Last name must be english with at least two characters."
-        >
-          Last name must be english with at least two characters.
-        </p>
-        }
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field-label">
-        <label
-          for="display_name"
-          class="required"
-          nz-tooltip
-          nzTooltipTitle="Enter display name"
-          >Display Name:</label
-        >
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          id="display_name"
-          formControlName="display_name"
-          placeholder="e.g.,John Don"
-        />
-        @if(form.get('display_name')?.invalid &&
-        form.get('display_name')?.touched){
-        <p
-          nz-tooltip
-          nzTooltipTitle="Display Name must be minimum 2 characters and maximum 50 characters"
-        >
-          Display Name must be minimum 2 characters and maximum 50 characters
-        </p>
-        }
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field-label">
-        <label
-          for="newPassword"
-          class="required"
-          nz-tooltip
-          nzTooltipTitle="The password must be a combination of lowercase letters, uppercase
-        letters and English numbers and special characters such as (&, $, #,
-        @, ^, % and...) and at least 8 and at most 20 characters."
-          >Password:</label
-        >
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          type="password"
-          id="newPassword"
-          formControlName="newPassword"
-          placeholder="Enter  your password"
-        />
-        @if(form.get('newPassword')?.invalid &&
-        form.get('newPassword')?.touched){
-        <p nz-tooltip nzTooltipTitle="The entered password is not acceptable.">
-          The entered password is not acceptable.
-        </p>
-        }
-      </div>
-    </div>
-
-    <div class="field-row">
+    }
+  </div>
+  <!-- <div class="field-row">
       <div class="field-label">
         <label for="confirmPassword" class="required">Re-enter Password:</label>
       </div>
@@ -188,14 +51,10 @@
           The entered password is not acceptable.
         </p>
         }
-      </div>
-    </div>
-  </div>
+      </div> -->
 
   <div class="flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <button nz-button type="submit" nzType="primary">Sign up</button>
-    </div>
     <button nz-button type="button" (click)="onReset()">Reset</button>
+    <button nz-button type="submit" nzType="primary">Register</button>
   </div>
 </form>
