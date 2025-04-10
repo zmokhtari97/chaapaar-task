@@ -1,3 +1,4 @@
+@if(this.subscription && this.subscription.closed){
 <form class="mt-3" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="flex flex-col gap-8 pb-16">
     @for(field of fields; track $index ){
@@ -35,26 +36,27 @@
     }
   </div>
   <!-- <div class="field-row">
-      <div class="field-label">
-        <label for="confirmPassword" class="required">Re-enter Password:</label>
-      </div>
-      <div class="field-input">
-        <input
-          nz-input
-          type="password"
-          id="confirmPassword"
-          formControlName="confirmPassword"
-          placeholder="Re-enter your password"
-        />
-        @if(form.hasError('mismatch') && form.get('confirmPassword')?.touched){
-        <p nz-tooltip nzTooltipTitle="The entered password is not acceptable.">
-          The entered password is not acceptable.
-        </p>
-        }
-      </div> -->
+        <div class="field-label">
+          <label for="confirmPassword" class="required">Re-enter Password:</label>
+        </div>
+        <div class="field-input">
+          <input
+            nz-input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            placeholder="Re-enter your password"
+          />
+          @if(form.hasError('mismatch') && form.get('confirmPassword')?.touched){
+          <p nz-tooltip nzTooltipTitle="The entered password is not acceptable.">
+            The entered password is not acceptable.
+          </p>
+          }
+        </div> -->
 
   <div class="flex items-center justify-between">
     <button nz-button type="button" (click)="onReset()">Reset</button>
     <button nz-button type="submit" nzType="primary">Register</button>
   </div>
 </form>
+}
