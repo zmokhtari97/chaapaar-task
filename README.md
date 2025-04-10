@@ -1,26 +1,8 @@
 # ChaapaarTask
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
-chaapaar-task/
-│
-├── src/
-│   ├── app/
-│   │   └── sign-up-form/               # Sign-up form component (standalone)
-│   │       ├── sign-up-form.component.ts
-│   │       ├── sign-up-form.component.html
-│   │       ├── sign-up-form.component.scss
-│   │       └── sign-up-form.component.spec.ts
-│   └── shared/
-│       └── services/
-│           └── register.service.ts     # Register form fetching service
-│
-├── cypress/
-│   ├── e2e/                            # E2E Cypress tests (if any)
-│   └── support/
-│       └── component-index.html        # For Cypress Component Testing
-│
-├── cypress.config.ts                   # Cypress configuration
-└── angular.json                        # Angular CLI config
+![Capture](https://github.com/user-attachments/assets/8cfe830f-d394-4ee8-9e53-f01c07d59ae9)
+
 
 ## Development server
 
